@@ -1,40 +1,43 @@
-import { useEffect, useState } from "react";
-import apiClient, { CanceledError } from "../services/api-client";
+// import { useEffect, useState } from "react";
+// import apiClient, { CanceledError } from "../services/api-client";
+import useData from "./useData";
 
-interface Genre {
+export interface Genre {
   id: number;
   name: string;
 }
 
-interface FetchGenresResponse {
-  count: number;
-  results: Genre[];
-}
+// interface FetchGenresResponse {
+//   count: number;
+//   results: Genre[];
+// }
 
-const useGenres = () => { 
-  const [genres, setGenres] = useState<Genre[]>([]);
-  const [error, setError] = useState("");
-  const [isLoading, setLoading] = useState(false);
+const useGenres = () => useData<Genre>("/genres");
 
-  useEffect(() => {
-    const controller = new AbortController();
+// const useGenres = () => {
+//   const [genres, setGenres] = useState<Genre[]>([]);
+//   const [error, setError] = useState("");
+//   const [isLoading, setLoading] = useState(false);
 
-    setLoading(true);
-    apiClient
-      .get<FetchGenresResponse>("/genres", { signal: controller.signal })
-      .then((res) => {
-        setGenres(res.data.results);
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (err instanceof CanceledError) return;
-        setError(err.message);
-        setLoading(false);
-      });
+//   useEffect(() => {
+//     const controller = new AbortController();
 
-    return () => controller.abort();
-  }, []);
+//     setLoading(true);
+//     apiClient
+//       .get<FetchGenresResponse>("/genres", { signal: controller.signal })
+//       .then((res) => {
+//         setGenres(res.data.results);
+//         setLoading(false);
+//       })
+//       .catch((err) => {
+//         if (err instanceof CanceledError) return;
+//         setError(err.message);
+//         setLoading(false);
+//       });
 
-  return { genres, error, isLoading };
-};
+//     return () => controller.abort();
+//   }, []);
+
+// return { genres, error, isLoading };
+// };
 export default useGenres;
