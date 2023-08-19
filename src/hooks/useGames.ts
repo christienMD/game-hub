@@ -35,6 +35,8 @@ const useGames = (
         genres: gameQery.genre?.id,
         platforms: gameQery.platform?.id,
         ordering: gameQery.sortOrder,
+        search: gameQery.searchText,
+        
       },
     },
     [gameQery]
