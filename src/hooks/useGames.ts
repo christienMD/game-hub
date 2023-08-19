@@ -1,6 +1,7 @@
 // import { useEffect, useState } from "react";
 // import apiClient, { CanceledError } from "../services/api-client";
 
+import { GameQuery } from "../App";
 import useData from "./useData";
 import { Genre } from "./useGenres";
 
@@ -23,13 +24,16 @@ export interface Game {
 // }
 
 const useGames = (
-  selectedGenre: Genre | null,
-  selectedPlatform: Platform | null
+  // selectedGenre: Genre | null,
+  // selectedPlatform: Platform | null
+  gameQery: GameQuery
 ) =>
   useData<Game>(
     "/games",
-    { params: { genres: selectedGenre?.id, platforms: selectedPlatform?.id } },
-    [selectedGenre?.id, selectedPlatform?.id]
+    {
+      params: { genres: gameQery.genre?.id, platforms: gameQery.platform?.id },
+    },
+    [gameQery]
   );
 
 // const useGames = () => {
