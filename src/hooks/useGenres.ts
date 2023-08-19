@@ -1,6 +1,7 @@
 // import { useEffect, useState } from "react";
 // import apiClient, { CanceledError } from "../services/api-client";
-import useData from "./useData";
+// import useData from "./useData";
+import genres from "../data/genres";
 
 export interface Genre {
   id: number;
@@ -13,7 +14,10 @@ export interface Genre {
 //   results: Genre[];
 // }
 
-const useGenres = () => useData<Genre>("/genres");
+const useGenres = () => ({ data: genres, isLoading: false, error: null });
+{
+  /*useData<Genre>("/genres")*/
+}
 
 // const useGenres = () => {
 //   const [genres, setGenres] = useState<Genre[]>([]);
