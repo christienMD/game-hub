@@ -1,9 +1,12 @@
 // import { useEffect, useState } from "react";
 // import apiClient, { CanceledError } from "../services/api-client";
 
+import { useQuery } from "@tanstack/react-query";
 import { GameQuery } from "../App";
-import useData from "./useData";
+// import { FetchResponse } from "./useData";
+import { FetchResponse } from "../services/api-client";
 import { Genre } from "./useGenres";
+import apiClient from "../services/api-client";
 
 export interface Platform {
   id: number;
@@ -29,18 +32,20 @@ const useGames = (
   // selectedPlatform: Platform | null
   gameQery: GameQuery
 ) =>
-  useData<Game>(
-    "/games",
-    {
-      params: {
-        genres: gameQery.genre?.id,
-        platforms: gameQery.platform?.id,
-        ordering: gameQery.sortOrder,
-        search: gameQery.searchText,
-      },
-    },
-    [gameQery]
-  );
+  useQuery<FetchResponse<Game>, Error>({
+    queryKey: ["games", gameQery],
+    queryFn: () =>
+      apiClient
+        .get<FetchResponse<Game>>("/games", {
+          params: {
+            genres: gameQery.genre?.id,
+            parent_platforms: gameQery.platform?.id,
+            ordering: gameQery.sortOrder,
+            search: gameQery.searchText,
+          },
+        })
+        .then((res) => res.data),
+  });
 
 // const useGames = () => {
 //   const [games, setGames] = useState<Game[]>([]);
