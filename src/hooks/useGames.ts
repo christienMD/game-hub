@@ -1,12 +1,11 @@
 // import { useEffect, useState } from "react";
 // import apiClient, { CanceledError } from "../services/api-client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { GameQuery } from "../App";
 // import { FetchResponse } from "./useData";
-import { FetchResponse } from "../services/api-client";
-import { Genre } from "./useGenres";
-import apiClient from "../services/api-client";
+import APIClient, { FetchResponse } from "../services/api-client";
+// import { Genre } from "./useGenres";
 import { Platform } from "./usePlatforms";
 
 // export interface Platform {
@@ -14,6 +13,8 @@ import { Platform } from "./usePlatforms";
 //   name: string;
 //   slug: string;
 // }
+
+const apiClient = new APIClient<FetchResponse<Game>>("/games");
 export interface Game {
   id: number;
   name: string;
@@ -28,24 +29,21 @@ export interface Game {
 //   results: Game[];
 // }
 
-const useGames = (
-  // selectedGenre: Genre | null,
-  // selectedPlatform: Platform | null
-  gameQery: GameQuery
-) =>
-  useQuery<FetchResponse<Game>, Error>({
+const useGames = (gameQery: GameQuery) =>
+  useInfiniteQuery<FetchResponse<Game>, Error>({
     queryKey: ["games", gameQery],
-    queryFn: () =>
-      apiClient
-        .get<FetchResponse<Game>>("/games", {
-          params: {
-            genres: gameQery.genre?.id,
-            parent_platforms: gameQery.platform?.id,
-            ordering: gameQery.sortOrder,
-            search: gameQery.searchText,
-          },
-        })
-        .then((res) => res.data),
+    queryFn: ({ pageParam = 1 }) =>
+      apiClient.getAll({
+        params: {
+          genres: gameQery.genre?.id,
+          parent_platforms: gameQery.platform?.id,
+          ordering: gameQery.sortOrder,
+          search: gameQery.searchText,
+        },
+      }),
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.next ? allPages.length + 1 : undefined;
+    },
   });
 
 // const useGames = () => {
