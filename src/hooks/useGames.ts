@@ -35,7 +35,7 @@ const useGames = (gameQery: GameQuery) =>
     queryFn: ({ pageParam = 1 }) =>
       apiClient.getAll({
         params: {
-          genres: gameQery.genre?.id,
+          genres: gameQery.genreId?.id,
           parent_platforms: gameQery.platform?.id,
           ordering: gameQery.sortOrder,
           search: gameQery.searchText,
@@ -44,7 +44,7 @@ const useGames = (gameQery: GameQuery) =>
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.next ? allPages.length + 1 : undefined;
     },
-    staleTime: 24 * 60 *60 * 1000 //24h
+    staleTime: 24 * 60 * 60 * 1000, //24h
   });
 
 // const useGames = () => {
