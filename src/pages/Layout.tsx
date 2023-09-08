@@ -1,19 +1,15 @@
-import NavBar from '../components/NavBar'
-import { Outlet } from 'react-router-dom'
-import { useState } from 'react';
-import { GameQuery } from './HomePage';
+import NavBar from "../components/NavBar";
+import { Outlet } from "react-router-dom";
+import { useState } from "react";
 
 const Layout = () => {
-  const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
 
   return (
     <>
-      <NavBar
-        onSearch={(searchText) => setGameQuery({ ...gameQuery, searchText })}
-      />
+      <NavBar />
       <Outlet />
     </>
   );
-}
+};
 
-export default Layout
+export default Layout;
