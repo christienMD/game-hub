@@ -5,7 +5,7 @@ import { GameQuery } from "../pages/HomePage";
 import APIClient, { FetchResponse } from "../services/api-client";
 import { Platform } from "./usePlatforms";
 
-const apiClient = new APIClient<FetchResponse<Game>>("/games");
+const apiClient = new APIClient<Game>("/games");
 export interface Game {
   id: number;
   name: string;
