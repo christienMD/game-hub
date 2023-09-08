@@ -1,37 +1,21 @@
-// import { useEffect, useState } from "react";
-// import apiClient, { CanceledError } from "../services/api-client";
-// import useData from "./useData";
 import { useQuery } from "@tanstack/react-query";
 import genres from "../data/genres";
 import APIClient, { FetchResponse } from "../services/api-client";
-// import { FetchResponse } from "../services/api-client";
-// import { FetchResponse } from "./useData";
 
-const apiClient = new APIClient<Genre>('/genres');
+const apiClient = new APIClient<Genre>("/genres");
 export interface Genre {
   id: number;
   name: string;
   image_background: string;
 }
 
-// interface FetchGenresResponse {
-//   count: number;
-//   results: Genre[];
-// }
-const initialGenres: FetchResponse<Genre> = {
-  count: genres.length,
-  results: genres,
-}; 
 const useGenres = () =>
   useQuery({
     queryKey: ["genres"],
     queryFn: apiClient.getAll,
     staleTime: 24 * 60 * 60 * 1000, //24hrs
-    initialData: initialGenres,
+    initialData: { count: genres.length, results: genres, next: null },
   });
-{
-  /*useData<Genre>("/genres")*/
-}
 
 // const useGenres = () => {
 //   const [genres, setGenres] = useState<Genre[]>([]);
