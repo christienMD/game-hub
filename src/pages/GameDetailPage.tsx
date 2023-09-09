@@ -4,6 +4,7 @@ import CriticScore from "../components/CriticScore";
 import DefinitionItem from "../components/DefinitionItem";
 import ExpandableText from "../components/ExpandableText";
 import GameAttributes from "../components/GameAttributes";
+import GameScreenshots from "../components/GameScreenshots";
 import GameTrailer from "../components/GameTrailer";
 import platforms from "../data/platforms";
 import useGame from "../hooks/useGame";
@@ -25,7 +26,7 @@ const GameDetailPage = () => {
         </GridItem>
         <GridItem>
           <GameTrailer gameId={game.id} />
-          {/* <GameScreenshots gameId={game.id} /> */}
+          <GameScreenshots gameId={game.id} />
         </GridItem>
       </SimpleGrid>
     </>
