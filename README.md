@@ -4,8 +4,6 @@ A beautiful and interactive video game discovery web application that allows use
 
 The application features advanced filtering capabilities, game detail pages with ratings and screenshots, responsive layouts, and performance-optimized image loading. Built with a clean architecture and TypeScript for enhanced code maintainability, GameHub demonstrates both frontend development proficiency and seamless API integration.
 
-![GameHub Screenshot](https://your-screenshot-link-here.png)
-
 ## Features
 
 - **Advanced Game Search & Discovery**: Filter games by platform, genre, and search queries
